@@ -24,23 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Array with the quiz questions
   const questions = [
-    new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
+    new Question("¿Que frase dice Jorge, cuando va a comprobar un codigo?", ["patata", "Y si todo sale bien...", "consol.log()", "break"], "Y si todo sale bien...", 1),
     new Question(
-      "What is the capital of France?",
-      ["Miami", "Paris", "Oslo", "Rome"],
-      "Paris",
+      "¿De que paìs es Jorge?",
+      ["Miami", "Venezuela", "Oslo", "Rome"],
+      "Venezuela",
       1
     ),
     new Question(
-      "Who created JavaScript?",
-      ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"],
-      "Brendan Eich",
+      "¿Cual es la frase actual que usarias para decirle a alguien que no tiene muchas luces?",
+      ["Tienes menos luces que los coches de los picapiedras", "Tienes menos luces que el 28 de abril", "Tienes menos luces que la feria de Carratraca", "Tienes menos luces que un seat panda"],
+      "Tienes menos luces que el 28 de abril",
       2
     ),
     new Question(
-      "What is the mass–energy equivalence equation?",
-      ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"],
-      "E = mc^2",
+      "Qué valor devuelve la expresión [] == ![] en JavaScript, y por qué?",
+      ["null", "true", "false", "undefined"],
+      "true",
       3
     ),
     // Add more questions here
@@ -71,7 +71,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timerIdInterval = setInterval(() => {
+    quiz.timeRemaining--;
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+  // Display the time remaining in the time remaining container
+  const timeRemainingContainer = document.getElementById("timeRemaining");
+  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    console.log(quiz.timeRemaining)
+    if(quiz.timeRemaining === 0){
+        showResults();
+    }
+  },1000)
+
+
 
   /************  EVENT LISTENERS  ************/
 
@@ -195,5 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    clearInterval(timerIdInterval);
   }
 });
